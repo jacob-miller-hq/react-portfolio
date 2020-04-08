@@ -1,9 +1,119 @@
 * {
   box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  // border: magenta dashed 1px;
 }
 
-.App {
+#App {
   background-color: #11377f;
   min-height: 100vh;
-  min-width: 100vw;
+  width: 100%;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.test {
+  height: 300px;
+  width: 500px;
+  background: #ffffff33;
+  border: red dashed 3px;
+  position: relative;
+  z-index: 10;
+}
+
+.debug {
+  border: magenta dashed 1px;
+}
+
+.foreground {
+  position: relative;
+  z-index: 2;
+}
+
+#Navbar {
+  width: 100%;
+  height: 64px;
+  background-color: #ddddddaa;
+  font-size: 18pt;
+  padding: 4px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  
+  position: relative;
+  z-index: 2;
+  box-shadow: 0px 0px 4px 1px #201030;
+
+  * {
+    text-decoration: none;
+    color: #333333;
+  }
+
+  .logo {
+    margin-left: 16px;
+    margin-right: 16px;
+    font-size: 32pt;
+    color: #11377f;
+  }
+
+  .link {
+    margin-left: 16px;
+    margin-bottom: 4px;
+
+    &:active, &.active {
+      color: #11377f;
+    }
+  }
+}
+
+#Home {
+
+  div {
+    padding: 16px;
+  }
+
+  .Fourier {
+    width: 100%;
+    padding: 0px;
+    padding-bottom: 300px;
+    background: linear-gradient(120deg, #202040 0%, #16276f 20%, #11377f 40%, #115f9f 100%);
+  
+    canvas {
+      max-width: 1024px;
+      width: 100%;
+    }
+  }
+
+  #intro {
+    margin-top: calc(-300px - 12vmin);
+    background-color: #ffffff7f;
+    min-height: 10vh;
+
+    h1 {
+      font-size: calc(18px + 4vmin);
+    }
+    p {
+      width: 60vw;
+      text-align: center;
+      br {
+        height: 32px;
+      }
+    }
+  }
+
+  #proj-courses {
+    background-color: #ffffff;
+  }
 }
