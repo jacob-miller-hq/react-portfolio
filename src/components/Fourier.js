@@ -65,6 +65,7 @@ class Cycles {
     })
   }
 
+  // TODO: Not sure where this is, but resize canvas to fix *some* overflow
   handleResize = () => {
     this.resizeCanvas()
 

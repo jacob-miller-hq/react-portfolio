@@ -6,7 +6,7 @@
 }
 
 #App {
-  background-color: #11377f;
+  background: linear-gradient(120deg, #202040 0%, #16276f 20%, #11377f 40%, #115f9f 100%);
   min-height: 100vh;
   width: 100%;
 }
@@ -23,6 +23,16 @@
   align-items: center;
 }
 
+.container {
+  width: 80%;
+}
+
+.foreground {
+  position: relative;
+  z-index: 1;
+  box-shadow: 0px 0px 4px 0px #201030;
+}
+
 .test {
   height: 300px;
   width: 500px;
@@ -36,15 +46,10 @@
   border: magenta dashed 1px;
 }
 
-.foreground {
-  position: relative;
-  z-index: 2;
-}
-
 #Navbar {
   width: 100%;
   height: 64px;
-  background-color: #ddddddaa;
+  background-color: #dddddddd;
   font-size: 18pt;
   padding: 4px;
 
@@ -52,9 +57,13 @@
   flex-direction: row;
   align-items: flex-end;
   
-  position: relative;
+  position: fixed;
   z-index: 2;
   box-shadow: 0px 0px 4px 1px #201030;
+
+  + * {
+    padding-top: 64px;
+  }
 
   * {
     text-decoration: none;
@@ -78,7 +87,16 @@
   }
 }
 
+#Footer {
+  color: white;
+  padding: 4px;
+}
+
 #Home {
+
+  p {
+    text-align: center;
+  }
 
   div {
     padding: 16px;
@@ -88,7 +106,6 @@
     width: 100%;
     padding: 0px;
     padding-bottom: 300px;
-    background: linear-gradient(120deg, #202040 0%, #16276f 20%, #11377f 40%, #115f9f 100%);
   
     canvas {
       max-width: 1024px;
@@ -106,7 +123,6 @@
     }
     p {
       width: 60vw;
-      text-align: center;
       br {
         height: 32px;
       }
