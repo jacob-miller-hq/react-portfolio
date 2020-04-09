@@ -25,9 +25,10 @@ const MILLISEC_PER_CYCLE = 10000
 const STEPS_PER_CYCLE = 2880
 
 class Cycles {
-  constructor(canvas, points) {
+  constructor(canvas, points, millisecPerCycle = MILLISEC_PER_CYCLE) {
     this.cvs = canvas
     this.points = points
+    this.millisecPerCycle = millisecPerCycle
     this.trace = []
     this.ctx = this.cvs.getContext('2d')
     
@@ -43,7 +44,6 @@ class Cycles {
     let maxX = this.points.reduce((max, p) => Math.max(p.x, max), this.points[0].x)
     let minY = this.points.reduce((min, p) => Math.min(p.y, min), this.points[0].y)
     let maxY = this.points.reduce((max, p) => Math.max(p.y, max), this.points[0].y)
-    console.log('boundPoints:', minX, minY, maxX, maxY)
     let boundW = maxX - minX
     let boundH = maxY - minY
     let wFactor = this.cvs.width / boundW
@@ -92,9 +92,18 @@ class Cycles {
     this.circles.sort((c1, c2) => {
       if (c1.speed === 0) return -1
       if (c2.speed === 0) return 1
-      let speedDiff = Math.abs(c1.speed) - Math.abs(c2.speed)
-      return speedDiff === 0 ? c2.radius - c1.radius : speedDiff
+      return c2.radius - c1.radius
+
+      /* Some fun alternative sorts: */
+      // let speedDiff = Math.abs(c1.speed) - Math.abs(c2.speed)
+      // return speedDiff === 0 ? c2.radius - c1.radius : speedDiff
+
+      // return c2.offset - c1.offset
+
+      // return c2.speed - c1.speed
     })
+    /* lowpass */
+    // this.circles = this.circles.filter(circle => Math.abs(circle.speed) < 20)
   }
 
   generateComplex(deg) {
@@ -123,15 +132,18 @@ class Cycles {
   }
 
   animLoop = (timestamp) => {
-    // TODO: move the calculation of this into a worker for them
-    //                  * Z M O O T H   C U R V E Z *
-    if (!this.start) {
-      this.start = timestamp
+    if (!this.last) {
+      this.last = timestamp
+      this.elapsed = 0
       this.step = -1
       this.tracing = true
     }
-    this.elapsed = timestamp - this.start
-    while(this.step / STEPS_PER_CYCLE < this.elapsed / MILLISEC_PER_CYCLE) {
+    let delta = timestamp - this.last
+    if (delta < 1000) {
+      this.elapsed += delta
+    }
+    this.last = timestamp
+    while(this.step / STEPS_PER_CYCLE < this.elapsed / this.millisecPerCycle) {
       this.step++
       let x = 0
       let y = 0
@@ -147,6 +159,10 @@ class Cycles {
       }
       if (this.step === STEPS_PER_CYCLE) {
         this.tracing = false
+        this.step = 0
+        this.elapsed -= this.millisecPerCycle
+        this.millisecPerCycle *= 2
+
       }
     }
 
